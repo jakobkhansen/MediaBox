@@ -1,1 +1,2 @@
- vlc -f {VIDEO_FILE} --sub-file={SUB_FILE} -I rc
+export DISPLAY=:0
+vlc -f {VIDEO_FILE} --sub-file={SUB_FILE} -I rc
