@@ -12,7 +12,7 @@
         "video_directory": "/home/jakob/Videos/"
     },
     
-    "streaming": {
+    "streaming":{
         "preferred_player": "vlc"
     },
 

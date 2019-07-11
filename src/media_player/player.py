@@ -14,8 +14,8 @@ def select_videofile(directory):
             if file.endswith((".mp4", ".mkv", "avi")):
                 videos.append(os.path.join(root, file))
 
-    clear_screen()
-    return file_menu(videos)
+    utils.clear_screen()
+    return utils.file_menu(videos)
 
 
 def player_menu():
@@ -28,6 +28,6 @@ def player_menu():
         "Play media locally":play_locally,
         "Send media to Raspberry pi":stream_to_pi.play_pi,
     }
-    clear_screen()
-    function_to_exec = menu(menu_items)
+    utils.clear_screen()
+    function_to_exec = utils.menu(menu_items)
     function_to_exec(video_path)

@@ -1,4 +1,4 @@
-from utils.utils import *
+from utils import utils
 from paramiko import SSHClient, AutoAddPolicy, RSAKey
 import threading, socketserver, socket, http.server
 import json
@@ -11,9 +11,10 @@ warnings.filterwarnings(action='ignore',module='.*paramiko.*')
 
 def play_pi(video_path):
 
-    settings = load_settings()["raspberrypi"]
-    port = settings["media_serving_port"]
-    host_ip = get_ip()
+    settings = utils.load_settings()
+    rasppi_settings = settings["raspberrypi"]
+    port = rasppi_settings["media_serving_port"]
+    host_ip = utils.get_ip()
     file_name = video_path.split("/")[-1]
     media_link = "http://{}:{}/{}".format(host_ip, port, file_name)
     flags = ["--timeout 30 "]
@@ -21,14 +22,14 @@ def play_pi(video_path):
     http_thread = threading.Thread(target=http_server, args=(video_path, port))
     http_thread.daemon = True
     http_thread.start()
-    ssh_client = connect_ssh(settings)
+    ssh_client = connect_ssh(rasppi_settings)
 
     players = {
         "vlc":vlc_launch,
         "omxplayer":omx_launch
     }
 
-    pref_player = load_settings()["streaming"]["preferred_player"]
+    pref_player = settings["streaming"]["preferred_player"]
     players[pref_player](ssh_client, media_link)
 
 
@@ -40,7 +41,7 @@ def omx_launch(ssh_client, media_link):
     stdin, stdout, stderr = ssh_client.exec_command(launch)
 
     time.sleep(5)
-    clear_screen()
+    utils.clear_screen()
     controller_loop(stdin)
 
 def vlc_launch(ssh_client, media_link):
@@ -49,14 +50,14 @@ def vlc_launch(ssh_client, media_link):
     stdin, stdout, stderr = ssh_client.exec_command(launch)
 
     time.sleep(5)
-    clear_screen()
+    utils.clear_screen()
     controller_loop(stdin)
 
 
 
 def controller_loop(stdin):
     while True:
-        char = getch()
+        char = utils.getch()
         stdin.write(char)
 
         if (char == "q"):
