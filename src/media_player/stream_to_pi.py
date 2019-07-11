@@ -23,14 +23,35 @@ def play_pi(video_path):
     http_thread.start()
     ssh_client = connect_ssh(settings)
 
-    vlc_launch = "omxplayer " + " ".join(flags) + media_link
-    print(vlc_launch)
+    players = {
+        "vlc":vlc_launch,
+        "omxplayer":omx_launch
+    }
 
-    stdin, stdout, stderr = ssh_client.exec_command(vlc_launch)
+    pref_player = load_settings()["streaming"]["preferred_player"]
+    players[pref_player](ssh_client, media_link)
+
+
+
+def omx_launch(ssh_client, media_link):
+
+    flags = [" --timeout 30"]
+    launch = "omxplayer" + " ".join(flags) + media_link
+    stdin, stdout, stderr = ssh_client.exec_command(launch)
 
     time.sleep(5)
-    # clear_screen()
+    clear_screen()
     controller_loop(stdin)
+
+def vlc_launch(ssh_client, media_link):
+    flags = []
+    launch = "vlc" + " ".join(flags) + media_link
+    stdin, stdout, stderr = ssh_client.exec_command(launch)
+
+    time.sleep(5)
+    clear_screen()
+    controller_loop(stdin)
+
 
 
 def controller_loop(stdin):

@@ -10,7 +10,7 @@ def menu(menu_items):
     while True:
         for index, description in enumerate(ordered.keys()):
             print("{} - {}".format(index+1, description))
-        
+
         selected = int(input("\nPick option: ")) - 1
 
         if selected >= 0 and selected < len(ordered):
