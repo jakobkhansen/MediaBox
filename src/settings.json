@@ -1,0 +1,13 @@
+{
+    "raspberrypi": {
+        "ip": "raspberrypi.local",
+        "username":"pi",
+        "password": null,
+        "Search-SSH": true,
+        "SSH-key": null,
+        "media_serving_port": 1260
+    },
+    "files": {
+        "video_directory": "~/Videos/"
+    }
+}

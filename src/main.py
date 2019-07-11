@@ -1,36 +1,23 @@
-from collections import OrderedDict
-import sys
-
-def menu():
-    menu_items = {
-        "Download movie":unimplemented,
-        "Play local media":unimplemented,
-        "Settings":unimplemented,
-        "Exit MediaBox":sys.exit,
-    }
-
-    ordered = OrderedDict(menu_items)
-
-    while True:
-        for index, description in enumerate(ordered.keys()):
-            print("{} - {}".format(index+1, description))
-        
-        selected = int(input("\nPick option: ")) - 1
-
-        if selected >= 0 and selected < len(ordered):
-            function = ordered[list(ordered.keys())[selected]]
-            function()
-        else:
-            print("Invalid index")
+from utils.utils import *
+from media_player.player import player_menu
+import os, sys
 
 
 def unimplemented():
     print("Unimplemented")
 
-
 def main():
+    clear_screen()
     print("Welcome to MediaBox, what do you want to do?\n")
-    menu()
+
+    menu_items = {
+        "Download movie":unimplemented,
+        "Play local media":player_menu,
+        "Settings":unimplemented,
+        "Exit MediaBox":sys.exit,
+    }
+    function_to_exec = menu(menu_items)
+    function_to_exec()
 
 
 if __name__ == "__main__":
