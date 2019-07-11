@@ -1,2 +1,18 @@
 # MediaBox
-A project that strives to become a complete mediabox cli, including movies, youtube, livestreams and whatever else I come up with. Specially designed to be used with a Raspberry Pi.
+A project that strives to become a complete mediabox CLI, including movies, youtube, livestreams and whatever else I come up with. Specially designed to be used with a Raspberry Pi. Written entirely in Python 3
+
+### Usage
+```bash
+$ pip3 -r requirements.txt
+$ python3 main.py
+```  
+
+### SSH
+This program connects to a raspberry pi using ssh and will automatically search for an ssh private key in ~/.ssh. If you want to specify a key or use a cleartext password instead (not recommended), set Search-SSH to false in settings.json and specify either a directory to a private-key or a password to connect with.  
+Due to the way Paramiko (ssh client) validates RSA keys, a working ssh key may not be valid, try converting your private-key using:
+```bash
+$ ssh-keygen -p -m PEM -f ~/.ssh/id_rsa
+```  
+  
+### Streaming to other devices
+This project specifically uses tools that come preinstalled with the raspberry pi to prevent having to install bloat on your device, but could in theory be used to stream to any linux device as long as the device has omxplayer installed and ssh enabled. Specify the ip and username in settings. I recommend setting up a static ip-address if your device does not have something similar to the pi's "raspberrypi.local" to find the ip.
