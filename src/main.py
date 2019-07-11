@@ -1,5 +1,5 @@
 from utils.utils import *
-from media_player.player import player_menu
+from media_player import player
 import os, sys
 
 
@@ -12,7 +12,7 @@ def main():
 
     menu_items = {
         "Download movie":unimplemented,
-        "Play local media":player_menu,
+        "Play local media":player.player_menu,
         "Settings":unimplemented,
         "Exit MediaBox":sys.exit,
     }
